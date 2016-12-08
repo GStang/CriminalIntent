@@ -8,6 +8,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 /**
@@ -16,6 +19,9 @@ import android.widget.EditText;
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
     private EditText editText;
+    private Button button;
+    private CheckBox mSolvedCheckBox;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +31,19 @@ public class CrimeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frament_crime,container,false);
+        View view = inflater.inflate(R.layout.frament_crime, container, false);
         editText = (EditText) view.findViewById(R.id.crime_title);
+        button = (Button) view.findViewById(R.id.crime_date);
+        mSolvedCheckBox = (CheckBox) view.findViewById(R.id.crime_solved);
+        button.setText(mCrime.getmDate().toString());
+        button.setEnabled(false);
+        mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCrime.setmSolved(b);
+            }
+        });
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
