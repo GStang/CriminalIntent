@@ -13,7 +13,7 @@ import android.os.Bundle;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends FragmentActivity {
+public class CrimePagerActivity extends AppCompatActivity {
     private static final String EXTRA_CRIME_ID =
             "com.swpuiot.criminalintent.crime_id";
     private ViewPager mViewPager;
