@@ -30,17 +30,17 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter adapter;
     private boolean mSubtitleViesible;
-    private static final String SAVED_SUBTITLE_VISIBLE="subtitle";
+    private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list, menu);
         MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
-        if (mSubtitleViesible){
+        if (mSubtitleViesible) {
             subtitleItem.setTitle(R.string.hide_subtitle);
 
-        }else{
+        } else {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
     }
@@ -68,7 +68,7 @@ public class CrimeListFragment extends Fragment {
         CrimeLab crimeLab = CrimeLab.getsCrimeLab(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
         String subtitle = getString(R.string.subtitle_format, crimeCount);
-        if (!mSubtitleViesible){
+        if (!mSubtitleViesible) {
             subtitle = null;
         }
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -87,7 +87,7 @@ public class CrimeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (savedInstanceState!=null){
+        if (savedInstanceState != null) {
             mSubtitleViesible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
         updateUI();
@@ -131,7 +131,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(SAVED_SUBTITLE_VISIBLE,mSubtitleViesible);
+        outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleViesible);
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
@@ -160,6 +160,9 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
 
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
+        }
     }
 
     private void updateUI() {
@@ -169,8 +172,11 @@ public class CrimeListFragment extends Fragment {
             adapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(adapter);
         } else {
+            adapter.setCrimes(crimes);
             adapter.notifyDataSetChanged();
         }
         updateSubtitle();
     }
+
+
 }
