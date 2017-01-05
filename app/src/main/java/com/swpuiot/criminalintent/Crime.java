@@ -11,6 +11,7 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private String mSuspect;
 
     public String getmTitle() {
         return mTitle;
@@ -41,10 +42,19 @@ public class Crime {
         this.mSolved = mSolved;
     }
 
-    public Crime(){
+    public String getmSuspect() {
+        return mSuspect;
+    }
+
+    public void setmSuspect(String mSuspect) {
+        this.mSuspect = mSuspect;
+    }
+
+    public Crime() {
         this(UUID.randomUUID());
     }
-    public Crime(UUID uuid){
+
+    public Crime(UUID uuid) {
         mId = uuid;
         mDate = new Date();
     }
