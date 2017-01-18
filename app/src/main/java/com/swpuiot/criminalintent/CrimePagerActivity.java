@@ -1,5 +1,12 @@
 package com.swpuiot.criminalintent;
 
+/**
+ * 这个Activity中有一个ViewPager，
+ * 然后ViewPager中存放CrimeFragment
+ * 实现滑动的效果
+ *
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -19,9 +26,9 @@ public class CrimePagerActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
 
-    public static Intent newIntent(Context packageContext , UUID crimeID){
-        Intent intent = new Intent(packageContext,CrimePagerActivity.class);
-        intent.putExtra(EXTRA_CRIME_ID,crimeID);
+    public static Intent newIntent(Context packageContext, UUID crimeID) {
+        Intent intent = new Intent(packageContext, CrimePagerActivity.class);
+        intent.putExtra(EXTRA_CRIME_ID, crimeID);
         return intent;
     }
 
@@ -47,11 +54,11 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
 
-            for (int i = 0; i<mCrimes.size();i++){
-                if (mCrimes.get(i).getmId().equals(crimeId)){
-                    mViewPager.setCurrentItem(i);
-                    break;
-                }
+        for (int i = 0; i < mCrimes.size(); i++) {
+            if (mCrimes.get(i).getmId().equals(crimeId)) {
+                mViewPager.setCurrentItem(i);
+                break;
             }
+        }
     }
 }

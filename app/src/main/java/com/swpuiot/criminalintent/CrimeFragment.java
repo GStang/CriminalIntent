@@ -68,7 +68,9 @@ public class CrimeFragment extends Fragment {
         mReportButton = (Button) view.findViewById(R.id.crime_report);
         updateDate();
         mSolvedCheckBox = (CheckBox) view.findViewById(R.id.crime_solved);
-        final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        final Intent pickContact = new Intent(Intent.ACTION_PICK,
+                ContactsContract.Contacts.CONTENT_URI);
+
         mSuspectButton = (Button) view.findViewById(R.id.crime_suspect);
         mSuspectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +81,7 @@ public class CrimeFragment extends Fragment {
         if (mCrime.getmSuspect() != null) {
             mSuspectButton.setText(mCrime.getmSuspect());
         }
-        //添加逻辑
+//        //添加逻辑
 
         PackageManager packageManager = getActivity().getPackageManager();
         if (packageManager.resolveActivity(pickContact,
@@ -93,8 +95,10 @@ public class CrimeFragment extends Fragment {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
-                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
+                i.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.crime_report_subject));
                 i = Intent.createChooser(i, getString(R.string.send_report));
+                //创建选择器
                 startActivity(i);
             }
         });
@@ -140,14 +144,15 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
-//            Log.d("CrimeFragment", "failed");
+            Log.e("CrimeFragment", "failed");
             return;
         }
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setmDate(date);
             updateDate();
-        }else if (requestCode == REQUEST_CONTACT && data!=null){
+        }
+        else if (requestCode == REQUEST_CONTACT && data!=null){
             Uri contactUri = data.getData();
             String[] queryFields = new String[]{
                     ContactsContract.Contacts.DISPLAY_NAME
@@ -158,6 +163,10 @@ public class CrimeFragment extends Fragment {
             try{
                 if (c.getCount() ==0)
                     return;
+                c.moveToFirst();
+                String suspect = c.getString(0);
+                mCrime.setmSuspect(suspect);
+                mSuspectButton.setText(suspect);
             }finally {
                 c.close();
             }
@@ -172,7 +181,8 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        CrimeLab.getsCrimeLab(getActivity()).updateCrime(mCrime);
+        CrimeLab.getsCrimeLab(getActivity()).
+                updateCrime(mCrime);
     }
 
     private String getCrimeReport() {
@@ -190,9 +200,10 @@ public class CrimeFragment extends Fragment {
         if (suspect == null) {
             suspect = getString(R.string.crime_report_no_suspect);
         } else {
-            suspect = getString(R.string.crime_report_suspect);
+            suspect = getString(R.string.crime_report_suspect,suspect);
         }
         String report = getString(R.string.crime_report, mCrime.getmTitle(), dateString, solvedString, suspect);
+
         return report;
     }
 }

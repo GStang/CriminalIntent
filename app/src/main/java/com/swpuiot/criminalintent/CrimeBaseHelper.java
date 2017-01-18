@@ -12,7 +12,7 @@ import static com.swpuiot.criminalintent.CrimeDbSchema.*;
  */
 public class CrimeBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "creimeBase.db";
+    private static final String DATABASE_NAME = "crimeBase.db";
 
     public CrimeBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -29,7 +29,7 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table" + CrimeTable.NAME + "(" +
+        sqLiteDatabase.execSQL("create table " + CrimeTable.NAME + "(" +
                 " _id integer primary key autoincrement," +
                 CrimeTable.Cols.UUID + "," +
                 CrimeTable.Cols.TITLE + "," +

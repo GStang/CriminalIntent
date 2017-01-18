@@ -13,6 +13,8 @@ import static com.swpuiot.criminalintent.CrimeDbSchema.*;
 
 /**
  * Created by DELL on 2016/12/8.
+ * 这个类是用来存储Crime对象的
+ * 并且CrimeLab是单例模式
  */
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
@@ -47,7 +49,6 @@ public class CrimeLab {
     }
 
     public Crime getCrime(UUID id) {
-//        return null;
         CrimeCursorWrapper cursor = queryCrimes(
                 CrimeTable.Cols.UUID + "=?",
                 new String[]{
@@ -69,17 +70,21 @@ public class CrimeLab {
         String uuidString = crime.getmId().toString();
         ContentValues values = getContentValues(crime);
 
-        mDatabase.update(CrimeTable.NAME, values, CrimeTable.Cols.UUID + "=?", new String[]{uuidString});
+        mDatabase.update(CrimeTable.NAME, values,
+                CrimeTable.Cols.UUID + "=?",
+                new String[]{uuidString});
     }
 
     public void addCrime(Crime c) {
         ContentValues values = getContentValues(c);
+
         mDatabase.insert(CrimeTable.NAME, null, values);
 
     }
 
     private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs) {
-        Cursor cursor = mDatabase.query(CrimeTable.NAME,
+        Cursor cursor = mDatabase.query(
+                CrimeTable.NAME,
                 null,
                 whereClause,
                 whereArgs,
@@ -93,8 +98,9 @@ public class CrimeLab {
         List<Crime> crimes = new ArrayList<>();
 
         CrimeCursorWrapper cursor = queryCrimes(null, null);
-        cursor.moveToFirst();
+
         try {
+            cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 crimes.add(cursor.getCrime());
                 cursor.moveToNext();

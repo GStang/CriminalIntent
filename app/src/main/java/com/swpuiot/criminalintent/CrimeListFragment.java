@@ -24,6 +24,9 @@ import java.util.zip.Inflater;
 
 /**
  * Created by DELL on 2016/12/8.
+ * 这个Frgament中的东西就有点多了，
+ * 首先是有一个RecycleView，
+ * 然后ViewHolder和Adapter都在这个Fragment里面
  */
 public class CrimeListFragment extends Fragment {
 

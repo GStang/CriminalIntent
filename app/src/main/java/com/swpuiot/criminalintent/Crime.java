@@ -5,6 +5,9 @@ import java.util.UUID;
 
 /**
  * Created by DELL on 2016/12/8.
+ * 这个是模型层的东西，
+ * 一个Crime代表着一个坏习惯，
+ * 其中包含ID，Title等东西
  */
 public class Crime {
     private UUID mId;
